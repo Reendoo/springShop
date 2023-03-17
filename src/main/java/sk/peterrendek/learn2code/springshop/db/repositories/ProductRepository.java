@@ -13,6 +13,8 @@ import sk.peterrendek.learn2code.springshop.domain.Product;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 @Component
 public class ProductRepository {
@@ -44,6 +46,9 @@ public class ProductRepository {
                 pr.setString(2,product.getName());
                 pr.setString(3,product.getDescription());
                 pr.setDouble(4,product.getPrice());
+                if(product.getCreatedAt()==null){
+                    product.setCreatedAt(Timestamp.from(Instant.now()));
+                }
                 pr.setTimestamp(5,product.getCreatedAt());
                 pr.setInt(6,product.getAvailable());
                 return  pr;

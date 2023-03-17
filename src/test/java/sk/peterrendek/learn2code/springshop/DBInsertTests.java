@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import sk.peterrendek.learn2code.springshop.domain.Customer;
 import sk.peterrendek.learn2code.springshop.domain.Merchant;
@@ -18,6 +19,7 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class DBInsertTests {
     private final String sqlInsertCustomer=
             "INSERT INTO customer(name,surname,email,address,age,phone_number) values(?,?,?,?,?,?)";
