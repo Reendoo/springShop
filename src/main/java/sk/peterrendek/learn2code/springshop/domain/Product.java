@@ -14,7 +14,7 @@ public class Product {
     @Nullable
     private Integer id;
     @NonNull
-    private Integer merchand_id;
+    private Integer merchant_id;
     @NonNull
     private String name;
     @NonNull
@@ -29,8 +29,8 @@ public class Product {
     public Product() {
     }
 
-    public Product(@NonNull Integer merchand_id, @NonNull String name, @NonNull String description, @NonNull Double price, int available) {
-        this.merchand_id = merchand_id;
+    public Product(@NonNull Integer merchant_id, @NonNull String name, @NonNull String description, @NonNull Double price, int available) {
+        this.merchant_id = merchant_id;
         this.name = name;
         this.description = description;
         this.price = price;
@@ -48,12 +48,12 @@ public class Product {
     }
 
     @NonNull
-    public Integer getMerchand_id() {
-        return merchand_id;
+    public Integer getMerchant_id() {
+        return merchant_id;
     }
 
-    public void setMerchand_id(@NonNull Integer merchand_id) {
-        this.merchand_id = merchand_id;
+    public void setMerchant_id(@NonNull Integer merchant_id) {
+        this.merchant_id = merchant_id;
     }
 
     @NonNull
@@ -105,11 +105,30 @@ public class Product {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return available == product.available && Objects.equals(id, product.id) && merchand_id.equals(product.merchand_id) && name.equals(product.name) && description.equals(product.description) && price.equals(product.price) && createdAt.equals(product.createdAt);
+        return available == product.available
+                && Objects.equals(id, product.id)
+                && merchant_id.equals(product.merchant_id)
+                && name.equals(product.name)
+                && description.equals(product.description)
+                && price.equals(product.price)
+                && createdAt.getTime()== product.createdAt.getTime();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, merchand_id, name, description, price, createdAt, available);
+        return Objects.hash(id, merchant_id, name, description, price, createdAt, available);
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", merchant_id=" + merchant_id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", createdAt=" + createdAt +
+                ", available=" + available +
+                '}';
     }
 }

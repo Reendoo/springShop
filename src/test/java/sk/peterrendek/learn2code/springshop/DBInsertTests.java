@@ -1,7 +1,5 @@
 package sk.peterrendek.learn2code.springshop;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +23,12 @@ public class DBInsertTests {
             "INSERT INTO customer(name,surname,email,address,age,phone_number) values(?,?,?,?,?,?)";
     private final String sqlInsertMerchant = "INSERT INTO merchant(name,email,address) values (?,?,?)";
 
-    private final String sqlInsertProduct = "INSERT INTO `springshop`.`product`\n" +
-            "(merchant_id,name,description,price,created_at,available) VALUES(?,?,?,?,?,?)";
+    private final String sqlInsertProduct = "INSERT INTO product(merchant_id,name,description,price,created_at,available) VALUES(?,?,?,?,?,?)";
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+
 
 
     @Test
@@ -57,6 +56,8 @@ public class DBInsertTests {
         });
     }
 
+
+
     @Test
     void createMerchant() {
         Merchant merchant = new Merchant( "Feeeeeeriiii","Feeeeeeriiii@gmail.com","fdsuifsdgisuf");
@@ -70,6 +71,7 @@ public class DBInsertTests {
                 return  prs;
             }
         });
+
     }
 
     @Test
@@ -79,7 +81,7 @@ public class DBInsertTests {
             @Override
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
                 PreparedStatement prs = con.prepareStatement(sqlInsertProduct);
-                prs.setInt(1,7);//product.getMerchand_id()
+                prs.setInt(1,1);//product.getMerchand_id()
                 prs.setString(2,product.getName());
                 prs.setString(3,product.getDescription());
                 prs.setDouble(4,product.getPrice());
