@@ -9,36 +9,36 @@ import sk.peterrendek.learn2code.springshop.domain.Product;
 import java.util.List;
 @Service
 public class ProductServiceImpl implements ProductService {
-    private final ProductRepository productRepository;
+    private final ProductRepository repository;
 
     public ProductServiceImpl(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+        this.repository = productRepository;
     }
 
 
     @Override
     public List<Product> getAllProducts() {
-        return productRepository.getAll();
+        return repository.getAll();
     }
 
     @Override
     public Product get(int id) {
-        return productRepository.get(id);
+        return repository.get(id);
     }
 
     @Override
     public Integer add(Product product) {
-        return productRepository.add(product);
+        return repository.add(product);
     }
 
     @Override
     public void delete(int id) {
-        productRepository.delete(id);
+        repository.delete(id);
     }
 
     @Override
     public void update(int id, UpdateProductRequest request) {
-        productRepository.update(id, request);
+        repository.update(id, request);
 
     }
 }

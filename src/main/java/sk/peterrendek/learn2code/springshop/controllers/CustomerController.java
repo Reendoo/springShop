@@ -1,26 +1,29 @@
 package sk.peterrendek.learn2code.springshop.controllers;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sk.peterrendek.learn2code.springshop.db.services.CustomerAccountService;
 import sk.peterrendek.learn2code.springshop.db.services.CustomerService;
 import sk.peterrendek.learn2code.springshop.domain.Customer;
+import sk.peterrendek.learn2code.springshop.domain.CustomerAccount;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("customer")
 public class CustomerController {
-    private final CustomerService service;
+    private final CustomerService customerService;
+    private final CustomerAccountService customerAccountService;
 
-    public CustomerController(CustomerService service) {
-        this.service = service;
+    public CustomerController(CustomerService service,CustomerAccountService customerAccountService) {
+        this.customerService = service;
+        this.customerAccountService=customerAccountService;
     }
 
     @PostMapping
     public ResponseEntity add(@RequestBody Customer c) {
-        Integer id = service.add(c);
+        Integer id = customerService.add(c);
         if (id != null) {
             return new ResponseEntity<>(id, HttpStatus.CREATED); //code 201
         }
@@ -28,17 +31,23 @@ public class CustomerController {
     }
     @GetMapping
     public ResponseEntity getAll() {
-        List<Customer> list = service.getAllCustomers();
+        List<Customer> list = customerService.getAllCustomers();
         return new ResponseEntity<>(list, HttpStatus.OK);  //code 200
     }
     @GetMapping("{id}")
     public ResponseEntity get(@PathVariable("id") int id) {
-        Customer c = service.get(id);
+        Customer c = customerService.get(id);
         if (c != null) {
             return new ResponseEntity<>(c, HttpStatus.OK);  //code 200
         }
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);  //code 404
     }
+    @PostMapping("/account")
+    public ResponseEntity addAccount(@RequestBody CustomerAccount customerAccount){
+        customerAccountService.addCustomerAccount(customerAccount);
+        return new ResponseEntity<>(null,HttpStatus.CREATED);
+    }
+
 
 
 }
