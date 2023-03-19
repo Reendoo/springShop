@@ -22,7 +22,6 @@ public class ProductController {
     }
     @PostMapping
     public ResponseEntity add(@RequestBody Product p){
-        System.out.println(p);
         Integer id = service.add(p);
         if(id!=null){
             return new ResponseEntity(id,HttpStatus.CREATED);

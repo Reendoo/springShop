@@ -111,4 +111,17 @@ public class Customer {
     public int hashCode() {
         return Objects.hash(id, name, surname, email, address, age, phoneNumber);
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", age=" + age +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
+    }
 }

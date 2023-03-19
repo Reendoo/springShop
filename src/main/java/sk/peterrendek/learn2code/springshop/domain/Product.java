@@ -26,7 +26,10 @@ public class Product {
     @NonNull
     private int available;
 
+
+
     public Product() {
+
     }
 
     public Product(@NonNull Integer merchant_id, @NonNull String name, @NonNull String description, @NonNull Double price, int available) {

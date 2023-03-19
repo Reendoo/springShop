@@ -74,4 +74,14 @@ public class Merchant {
     public int hashCode() {
         return Objects.hash(id, name, email, address);
     }
+
+    @Override
+    public String toString() {
+        return "Merchant{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                '}';
+    }
 }
