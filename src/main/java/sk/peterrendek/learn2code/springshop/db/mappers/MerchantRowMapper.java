@@ -14,6 +14,6 @@ public class MerchantRowMapper implements RowMapper<Merchant> {
         merchant.setName(rs.getString("name"));
         merchant.setEmail(rs.getString("email"));
         merchant.setAddress(rs.getString("address"));
-      return merchant;
+        return merchant;
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.web.servlet.MockMvc;
-import sk.peterrendek.learn2code.springshop.db.services.request.UpdateProductRequest;
+import sk.peterrendek.learn2code.springshop.db.services.api.request.UpdateProductRequest;
 import sk.peterrendek.learn2code.springshop.domain.Customer;
 import sk.peterrendek.learn2code.springshop.domain.Merchant;
 import sk.peterrendek.learn2code.springshop.domain.Product;
@@ -32,7 +32,7 @@ public class RestControllerTests {
     @Autowired
     private MockMvc mockMvc;
     private final ObjectMapper objectMapper = new ObjectMapper();
-    Merchant m;
+    private Merchant merchant;
 
     @Test
     void customer() throws Exception {
@@ -59,8 +59,10 @@ public class RestControllerTests {
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
     }
-    private String selectEntityNotOK(String url) throws Exception {
-        return mockMvc.perform(get(url)
+
+    private /*String*/void selectEntityNotOK(String url) throws Exception {
+        /*return*/
+        mockMvc.perform(get(url)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andReturn().getResponse().getContentAsString();
@@ -77,21 +79,21 @@ public class RestControllerTests {
     @Test
     void merchant() throws Exception {
         //merchant was already created in init
-        String merchantJSON = selectEntityOK("/merchant/" + m.getId());
+        String merchantJSON = selectEntityOK("/merchant/" + merchant.getId());
         Merchant mFromDB = objectMapper.readValue(merchantJSON, Merchant.class);
-        assertEquals(m, mFromDB, "should be same");
+        assertEquals(merchant, mFromDB, "should be same");
         String merchantsJSON = selectEntityOK("/merchant");
         List<Merchant> merchants = objectMapper.readValue(merchantsJSON, new TypeReference<>() {
         });
         assertEquals(1, merchants.size(), "should be 1");
-        assertEquals(m, merchants.get(0), "should be same");
+        assertEquals(merchant, merchants.get(0), "should be same");
         assertEquals(mFromDB, merchants.get(0), "should be same");
     }
 
     @Test
     void product() throws Exception {
-        if (m.getId() == null) throw new AssertionError();
-        Product p = new Product(m.getId(), "kladivo", "superKladivo", 42.3, 100);
+        if (merchant.getId() == null) throw new AssertionError();
+        Product p = new Product(merchant.getId(), "kladivo", "superKladivo", 42.3, 100);
         String id = insertEntity(p, "/product");
         p.setId(objectMapper.readValue(id, Integer.class));
         String productJSON = selectEntityOK("/product/" + p.getId());
@@ -118,17 +120,16 @@ public class RestControllerTests {
                 .andExpect(status().isOk());
 
 
-        String pDeletedJSON = selectEntityNotOK("/product/" + p.getId());
+        selectEntityNotOK("/product/" + p.getId());
         String productsDeletedJSON = selectEntityOK("/product");
         List<Product> listDeleted = objectMapper.readValue(productsDeletedJSON, new TypeReference<>() {
         }); // retype
 
-        assertEquals(0,listDeleted.size(), "should be empty");
+        assertEquals(0, listDeleted.size(), "should be empty");
 
         mockMvc.perform(delete("/product/" + p.getId())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isPreconditionFailed());
-
 
 
     }
@@ -145,8 +146,9 @@ public class RestControllerTests {
         assertEquals(request.getAvailable(), (pFromDB2.getAvailable()), "shouldn't be same");
     }
 
-    private String update(UpdateProductRequest request, String url) throws Exception {
-        return mockMvc.perform(patch(url)
+    private /*String*/ void update(UpdateProductRequest request, String url) throws Exception {
+        /*return*/
+        mockMvc.perform(patch(url)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
@@ -155,10 +157,10 @@ public class RestControllerTests {
 
     @BeforeEach
     public void init() throws Exception {
-        if (m == null) {
-            m = new Merchant("Rendo", "rendo@gmail.com", "Sittard");
-            String id = insertEntity(m, "/merchant");
-            m.setId(objectMapper.readValue(id, Integer.class));
+        if (merchant == null) {
+            merchant = new Merchant("Rendo", "rendo@gmail.com", "Sittard");
+            String id = insertEntity(merchant, "/merchant");
+            merchant.setId(objectMapper.readValue(id, Integer.class));
         }
     }
 }

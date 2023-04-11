@@ -12,21 +12,24 @@ public class CustomerAccountRepository {
     public CustomerAccountRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-    public void add(CustomerAccount customerAccount){
+
+    public void add(CustomerAccount customerAccount) {
         final String sql = "insert into customer_account(customer_id, money) values(?,?)";
-        jdbcTemplate.update(sql,customerAccount.getCustomerId(),customerAccount.getMoney());
+        jdbcTemplate.update(sql, customerAccount.getCustomerId(), customerAccount.getMoney());
     }
-    public Double getMoney(int customer_id){
+
+    public Double getMoney(int customer_id) {
         final String sql = "select money from customer_account where customer_id=?";
-        try{
-            return jdbcTemplate.queryForObject(sql, Double.class,customer_id);
-        }catch (DataAccessException e){
+        try {
+            return jdbcTemplate.queryForObject(sql, Double.class, customer_id);
+        } catch (DataAccessException e) {
             return null;
         }
     }
-    public void setMoney(int customer_id, double money){
+
+    public void setMoney(int customer_id, double money) {
         final String sql = "update customer_account set money = ? where customer_id =?";
-        jdbcTemplate.update(sql,money,customer_id);
+        jdbcTemplate.update(sql, money, customer_id);
     }
 }
 

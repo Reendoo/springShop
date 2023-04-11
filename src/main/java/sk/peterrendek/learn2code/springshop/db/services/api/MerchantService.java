@@ -1,4 +1,4 @@
-package sk.peterrendek.learn2code.springshop.db.services;
+package sk.peterrendek.learn2code.springshop.db.services.api;
 
 
 import org.springframework.lang.Nullable;
@@ -8,9 +8,11 @@ import java.util.List;
 
 public interface MerchantService {
     List<Merchant> getAllMerchants();
+
     @Nullable
     Merchant get(int id);
+
     @Nullable
-    Integer add (Merchant merchant); //generated id
+    Integer add(Merchant merchant); //generated id
 
 }

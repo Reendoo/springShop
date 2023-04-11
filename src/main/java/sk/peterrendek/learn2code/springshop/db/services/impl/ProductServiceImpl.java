@@ -2,7 +2,7 @@ package sk.peterrendek.learn2code.springshop.db.services.impl;
 
 import org.springframework.stereotype.Service;
 import sk.peterrendek.learn2code.springshop.db.repositories.ProductRepository;
-import sk.peterrendek.learn2code.springshop.db.services.ProductService;
+import sk.peterrendek.learn2code.springshop.db.services.api.ProductService;
 import sk.peterrendek.learn2code.springshop.db.services.api.request.UpdateProductRequest;
 import sk.peterrendek.learn2code.springshop.domain.Product;
 

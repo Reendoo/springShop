@@ -1,7 +1,6 @@
 package sk.peterrendek.learn2code.springshop;
 
 
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.junit.jupiter.api.Test;
-import sk.peterrendek.learn2code.springshop.db.services.CustomerService;
-import sk.peterrendek.learn2code.springshop.db.services.MerchantService;
-import sk.peterrendek.learn2code.springshop.db.services.ProductService;
-import sk.peterrendek.learn2code.springshop.db.services.request.UpdateProductRequest;
+import sk.peterrendek.learn2code.springshop.db.services.api.CustomerService;
+import sk.peterrendek.learn2code.springshop.db.services.api.MerchantService;
+import sk.peterrendek.learn2code.springshop.db.services.api.ProductService;
+import sk.peterrendek.learn2code.springshop.db.services.api.request.UpdateProductRequest;
 import sk.peterrendek.learn2code.springshop.domain.Customer;
 import sk.peterrendek.learn2code.springshop.domain.Merchant;
 import sk.peterrendek.learn2code.springshop.domain.Product;
@@ -25,14 +24,19 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class DBServiceTest {
-    @Autowired
-    private CustomerService customerService;
-    @Autowired
-    private MerchantService merchantService;
+
+    private final CustomerService customerService;
+    private final MerchantService merchantService;
+    private final ProductService productService;
 
     @Autowired
-    private ProductService productService;
-     private Merchant merchant;
+    public DBServiceTest(CustomerService customerService, MerchantService merchantService, ProductService productService) {
+        this.customerService = customerService;
+        this.merchantService = merchantService;
+        this.productService = productService;
+    }
+
+    private Merchant merchant;
 
     @BeforeEach
     public void createMerchant() {
@@ -61,6 +65,7 @@ public class DBServiceTest {
     @Test
     void merchant() {
         // merchant is already create
+        assertNotNull(merchant.getId());
         Merchant merchantFromDB = merchantService.get(merchant.getId());
         assertEquals(merchant, merchantFromDB, "should be same");
         List<Merchant> merchants = merchantService.getAllMerchants();
@@ -71,24 +76,25 @@ public class DBServiceTest {
 
     @Test
     void product() {
-        Product product = new Product(merchant.getId(),"kladivo","kladivo zamocnicke",105.44,10);
+        assertNotNull(merchant.getId());
+        Product product = new Product(merchant.getId(), "kladivo", "kladivo zamocnicke", 105.44, 10);
         Integer id = productService.add(product);
         assertNotNull(id, "shouldn't be null");
         product.setId(id);
-        Product productFromDB = productService.get(id);        ;
+        Product productFromDB = productService.get(id);
         assertEquals(product, productFromDB, "should be same");
         List<Product> products = productService.getAllProducts();
         assertFalse(products.isEmpty(), "shouldn't be empty");
         assertEquals(1, products.size(), "should be 1");
         assertEquals(product, products.get(0), "should be same");
         product.setAvailable(100);
-        UpdateProductRequest request = new UpdateProductRequest(product.getName(),product.getDescription(),product.getPrice(),product.getAvailable());
-        productService.update(product.getId(),request);
+        UpdateProductRequest request = new UpdateProductRequest(product.getName(), product.getDescription(), product.getPrice(), product.getAvailable());
+        productService.update(product.getId(), request);
         Product productAfterUpdate = productService.get(product.getId());
-        assertEquals(product,productAfterUpdate, "should be same");
-        assertNotEquals(productFromDB,productAfterUpdate, "shouldn't be same");
+        assertEquals(product, productAfterUpdate, "should be same");
+        assertNotEquals(productFromDB, productAfterUpdate, "shouldn't be same");
         productService.delete(product.getId());
-        assertEquals(0,productService.getAllProducts().size(),"shoud be empty");
+        assertEquals(0, productService.getAllProducts().size(), "shoud be empty");
 
 
     }

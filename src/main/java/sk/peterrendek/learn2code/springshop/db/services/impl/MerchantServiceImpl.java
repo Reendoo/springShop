@@ -2,7 +2,7 @@ package sk.peterrendek.learn2code.springshop.db.services.impl;
 
 import org.springframework.stereotype.Service;
 import sk.peterrendek.learn2code.springshop.db.repositories.MerchantRepository;
-import sk.peterrendek.learn2code.springshop.db.services.MerchantService;
+import sk.peterrendek.learn2code.springshop.db.services.api.MerchantService;
 import sk.peterrendek.learn2code.springshop.domain.Merchant;
 
 import java.util.List;

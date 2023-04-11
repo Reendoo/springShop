@@ -3,8 +3,7 @@ package sk.peterrendek.learn2code.springshop.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sk.peterrendek.learn2code.springshop.db.services.MerchantService;
-import sk.peterrendek.learn2code.springshop.domain.Customer;
+import sk.peterrendek.learn2code.springshop.db.services.api.MerchantService;
 import sk.peterrendek.learn2code.springshop.domain.Merchant;
 
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("merchant")
 public class MerchantController {
-    MerchantService service;
+    private final MerchantService service;
 
     public MerchantController(MerchantService service) {
         this.service = service;

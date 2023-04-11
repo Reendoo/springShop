@@ -1,4 +1,4 @@
-package sk.peterrendek.learn2code.springshop.db.services;
+package sk.peterrendek.learn2code.springshop.db.services.api;
 
 import sk.peterrendek.learn2code.springshop.db.services.api.request.BuyProductRequest;
 import sk.peterrendek.learn2code.springshop.db.services.api.response.BuyProductResponse;

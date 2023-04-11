@@ -3,8 +3,8 @@ package sk.peterrendek.learn2code.springshop.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sk.peterrendek.learn2code.springshop.db.services.CustomerAccountService;
-import sk.peterrendek.learn2code.springshop.db.services.CustomerService;
+import sk.peterrendek.learn2code.springshop.db.services.api.CustomerAccountService;
+import sk.peterrendek.learn2code.springshop.db.services.api.CustomerService;
 import sk.peterrendek.learn2code.springshop.domain.Customer;
 import sk.peterrendek.learn2code.springshop.domain.CustomerAccount;
 

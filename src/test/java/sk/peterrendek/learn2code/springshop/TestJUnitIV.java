@@ -8,7 +8,7 @@ import org.springframework.test.annotation.DirtiesContext;
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
-public class ShopApplicationTestsJUNIT4 {
+public class TestJUnitIV {
     @Test
     public void name() {
         int a = 5;
