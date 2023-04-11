@@ -1,6 +1,6 @@
 # springShop
-<p>Based on the https://skillmea.sk/online-kurzy/online-kurz-spring-boot tutorial, I created a simple rest API for a potential frontend of an online store. The application manages customers, merchants and products, using implemented CRUD operations over the corresponding tables which are stored in a database (MySQL).<\p>
-<p>Used tools and technologies</p>
+Based on the https://skillmea.sk/online-kurzy/online-kurz-spring-boot tutorial, I created a simple rest API for a potential frontend of an online store. The application manages customers, merchants and products, using implemented CRUD operations over the corresponding tables which are stored in a database (MySQL).<br>
+Used tools and technologies<br>
 
 - DB: Mysql, Workbech, H2 (test),
 - JAVA19, Spring boot web, Spring boot web
